@@ -16,7 +16,7 @@ public interface Interface {
 	
 	public Procedimentos CancelarProcedimentos (String nomeP, String nomeM, Diagnostico diagnostico, long contatoP, long contatoM, Calendar calendar, String tipo) throws NomeInvalidoException, ContatoInvalidoException;
 	
-	public Procedimentos RealizarProcedimentos (String nomeP, String nomeM, Diagnostico diagnostico, long contatoP, long contatoM, Calendar calendar) throws NomeInvalidoException, ContatoInvalidoException;
+	public Procedimentos RealizarProcedimentos (String nomeP, String nomeM, Diagnostico diagnostico, long contatoP, long contatoM, Calendar calendar, String tipo) throws NomeInvalidoException, ContatoInvalidoException;
 	
 	
 }

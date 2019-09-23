@@ -112,9 +112,19 @@ public class Implementar implements Interface {
 
 	@Override
 	public Procedimentos RealizarProcedimentos(String nomeP, String nomeM, Diagnostico diagnostico, long contatoP,
-			long contatoM, Calendar calendar) throws NomeInvalidoException, ContatoInvalidoException {
-		// TODO Auto-generated method stub
-		return null;
+			long contatoM, Calendar calendar, String tipo) throws NomeInvalidoException, ContatoInvalidoException {
+		DAO<Procedimentos> dao = new DAO<Procedimentos>();
+		Calendar c = new GregorianCalendar();
+		Paciente p = new Paciente();
+		Procedimentos pro = new Procedimentos();
+
+		p.setNome(nomeP);
+		p.setContato(contatoP);
+		pro.setTipo(tipo);
+
+		dao.save(pro);
+
+		return pro;
 	}
 
 }
