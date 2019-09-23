@@ -9,25 +9,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 public class Diagnostico implements Identificavel {
-	
+
 	@Id
-	@GeneratedValue(generator="diagnostico_seq", strategy=GenerationType.SEQUENCE)
-	@SequenceGenerator(name="diagnostico_seq", sequenceName="diagnostico_seq")
+	@GeneratedValue(generator = "diagnostico_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "diagnostico_seq", sequenceName = "diagnostico_seq")
 	private Integer id;
 	private Array[] procedimentosrealizados = new Array[1000];
 	private Array[] procedimentospendentes = new Array[1000];
-	private Paciente nome;
+	private String nome;
 	private Date dataentrada;
 	private Array[] medicamentos = new Array[1000];
-	
+
 	@ManyToMany
-	@JoinTable(name = "Medico_diagnotico", joinColumns = @JoinColumn(name = "diagnotico_id"), inverseJoinColumns = @JoinColumn(name = "medico_id")
+	@JoinTable(name = "Medico_diagnostico", joinColumns = @JoinColumn(name = "diagnostico_id"), inverseJoinColumns = @JoinColumn(name = "medico_id")
 
 	)
 	Set<Medico> medico;
+
+	@OneToOne
+	@JoinColumn(name = "id_paciente")
+	private Paciente paciente;
 
 	public Integer getId() {
 		return id;
@@ -53,11 +58,11 @@ public class Diagnostico implements Identificavel {
 		this.procedimentospendentes = procedimentospendentes;
 	}
 
-	public Paciente getNome() {
+	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(Paciente nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -75,6 +80,22 @@ public class Diagnostico implements Identificavel {
 
 	public void setMedicamentos(Array[] medicamentos) {
 		this.medicamentos = medicamentos;
+	}
+
+	public Set<Medico> getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Set<Medico> medico) {
+		this.medico = medico;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	@Override
@@ -98,10 +119,20 @@ public class Diagnostico implements Identificavel {
 			return false;
 		if (!Arrays.equals(medicamentos, other.medicamentos))
 			return false;
+		if (medico == null) {
+			if (other.medico != null)
+				return false;
+		} else if (!medico.equals(other.medico))
+			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (paciente == null) {
+			if (other.paciente != null)
+				return false;
+		} else if (!paciente.equals(other.paciente))
 			return false;
 		if (!Arrays.equals(procedimentospendentes, other.procedimentospendentes))
 			return false;
@@ -114,18 +145,12 @@ public class Diagnostico implements Identificavel {
 	public String toString() {
 		return "Diagnostico [id=" + id + ", procedimentosrealizados=" + Arrays.toString(procedimentosrealizados)
 				+ ", procedimentospendentes=" + Arrays.toString(procedimentospendentes) + ", nome=" + nome
-				+ ", dataentrada=" + dataentrada + ", medicamentos=" + Arrays.toString(medicamentos) + "]";
+				+ ", dataentrada=" + dataentrada + ", medicamentos=" + Arrays.toString(medicamentos) + ", medico="
+				+ medico + ", paciente=" + paciente + "]";
 	}
-
-	public Diagnostico(Integer id, Array[] procedimentosrealizados, Array[] procedimentospendentes, Paciente nome,
-			Date dataentrada, Array[] medicamentos) {
-		super();
-		this.id = id;
-		this.procedimentosrealizados = procedimentosrealizados;
-		this.procedimentospendentes = procedimentospendentes;
-		this.nome = nome;
-		this.dataentrada = dataentrada;
-		this.medicamentos = medicamentos;
-	}
+	
+	
+	
+	
 
 }

@@ -34,6 +34,14 @@ public class Medico implements Identificavel {
 
 	)
 	Set<Diagnostico> diagnostico;
+	
+	@ManyToMany
+	@JoinTable(name = "Medico_Paciente", joinColumns = @JoinColumn(name = "Medico_id"), inverseJoinColumns = @JoinColumn(name = "Paciente_id")
+
+	)
+	Set<Paciente> paciente;
+
+
 
 	public Integer getId() {
 		return id;
@@ -102,12 +110,6 @@ public class Medico implements Identificavel {
 				+ "]";
 	}
 
-	public Medico(Integer id, String nome, long contato, String especializacao) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.contato = contato;
-		this.especializacao = especializacao;
-	}
+	
 
 }

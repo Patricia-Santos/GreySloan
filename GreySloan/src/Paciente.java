@@ -1,17 +1,21 @@
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 public class Paciente implements Identificavel {
-	
+
 	@Id
-	@GeneratedValue(generator="paciente_seq", strategy=GenerationType.SEQUENCE)
-	@SequenceGenerator(name="paciente_seq", sequenceName="paciente_seq")
+	@GeneratedValue(generator = "paciente_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "paciente_seq", sequenceName = "paciente_seq")
 	private Integer id;
 	private String nome;
 	private String endereco;
@@ -21,10 +25,25 @@ public class Paciente implements Identificavel {
 	private String alergias;
 	private String tiponsanguineo;
 	private Medico medicoresponsavel;
-	
+
 	@ManyToOne
-	@JoinColumn (name = "id_p")
+	@JoinColumn(name = "id_p")
 	Paciente p;
+
+	@OneToOne(mappedBy = "paciente")
+	private Diagnostico diagnostico;
+
+	@ManyToMany
+	@JoinTable(name = "Paciente_Procedimentos", joinColumns = @JoinColumn(name = "Paciente_id"), inverseJoinColumns = @JoinColumn(name = "Procedimentos_id")
+
+	)
+	Set<Procedimentos> procedimentos;
+
+	@ManyToMany
+	@JoinTable(name = "Paciente_Medico", joinColumns = @JoinColumn(name = "Paciente_id"), inverseJoinColumns = @JoinColumn(name = "Medico_id")
+
+	)
+	Set<Medico> medico;
 
 	public Integer getId() {
 		return id;
@@ -156,18 +175,7 @@ public class Paciente implements Identificavel {
 				+ alergias + ", tiponsanguineo=" + tiponsanguineo + ", medicoresponsavel=" + medicoresponsavel + "]";
 	}
 
-	public Paciente(Integer id, String nome, String endereco, long contato, long contatoparentes, Date datanascimento,
-			String alergias, String tiponsanguineo, Medico medicoresponsavel) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.contato = contato;
-		this.contatoparentes = contatoparentes;
-		this.datanascimento = datanascimento;
-		this.alergias = alergias;
-		this.tiponsanguineo = tiponsanguineo;
-		this.medicoresponsavel = medicoresponsavel;
-	}
+	
 
+	
 }
