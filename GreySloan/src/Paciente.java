@@ -1,6 +1,7 @@
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,9 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class Paciente implements Identificavel {
 
 	@Id
@@ -24,14 +26,19 @@ public class Paciente implements Identificavel {
 	private Date datanascimento;
 	private String alergias;
 	private String tiponsanguineo;
-	private Medico medicoresponsavel;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "id_p")
-	Paciente p;
+	@JoinColumn(name = "id_medico")
+	private Medico medicoresponsavel;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "id_hospital")
+	Hospital h;
 
-	@OneToOne(mappedBy = "paciente")
-	private Diagnostico diagnostico;
+	@OneToMany
+	(mappedBy = "d" + "")
+	private Set<Diagnostico> diagnostico;
 
 	@ManyToMany
 	@JoinTable(name = "Paciente_Procedimentos", joinColumns = @JoinColumn(name = "Paciente_id"), inverseJoinColumns = @JoinColumn(name = "Procedimentos_id")
@@ -175,7 +182,4 @@ public class Paciente implements Identificavel {
 				+ alergias + ", tiponsanguineo=" + tiponsanguineo + ", medicoresponsavel=" + medicoresponsavel + "]";
 	}
 
-	
-
-	
 }

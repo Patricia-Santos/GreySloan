@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class Procedimentos implements Identificavel {
 
 	@Id
@@ -36,6 +38,8 @@ public class Procedimentos implements Identificavel {
 
 	)
 	Set<Paciente> paciente2;
+	
+	
 	public Integer getId() {
 		return id;
 	}

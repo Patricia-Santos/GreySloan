@@ -3,15 +3,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class Diagnostico implements Identificavel {
 
 	@Id
@@ -30,9 +32,9 @@ public class Diagnostico implements Identificavel {
 	)
 	Set<Medico> medico;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_paciente")
-	private Paciente paciente;
+	Diagnostico d;
 
 	public Integer getId() {
 		return id;
@@ -90,14 +92,7 @@ public class Diagnostico implements Identificavel {
 		this.medico = medico;
 	}
 
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -129,10 +124,10 @@ public class Diagnostico implements Identificavel {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (paciente == null) {
-			if (other.paciente != null)
+		if (nome == null) {
+			if (other.nome != null)
 				return false;
-		} else if (!paciente.equals(other.paciente))
+		} else if (!nome.equals(other.nome))
 			return false;
 		if (!Arrays.equals(procedimentospendentes, other.procedimentospendentes))
 			return false;
@@ -146,7 +141,15 @@ public class Diagnostico implements Identificavel {
 		return "Diagnostico [id=" + id + ", procedimentosrealizados=" + Arrays.toString(procedimentosrealizados)
 				+ ", procedimentospendentes=" + Arrays.toString(procedimentospendentes) + ", nome=" + nome
 				+ ", dataentrada=" + dataentrada + ", medicamentos=" + Arrays.toString(medicamentos) + ", medico="
-				+ medico + ", paciente=" + paciente + "]";
+				+ medico + ", paciente=" + nome + "]";
+	}
+
+	public Diagnostico getD() {
+		return d;
+	}
+
+	public void setD(Diagnostico d) {
+		this.d = d;
 	}
 	
 	

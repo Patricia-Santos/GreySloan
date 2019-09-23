@@ -1,5 +1,6 @@
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -7,8 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class Medico implements Identificavel {
 	
 	@Id
@@ -30,15 +33,12 @@ public class Medico implements Identificavel {
 	Set<Procedimentos> procedimentos;
 	
 	@ManyToMany
-	@JoinTable(name = "Medico_diagnotico", joinColumns = @JoinColumn(name = "medico_id"), inverseJoinColumns = @JoinColumn(name = "diagnostico_id")
+	@JoinTable(name = "Medico_diagnostico", joinColumns = @JoinColumn(name = "medico_id"), inverseJoinColumns = @JoinColumn(name = "diagnostico_id")
 
 	)
 	Set<Diagnostico> diagnostico;
 	
-	@ManyToMany
-	@JoinTable(name = "Medico_Paciente", joinColumns = @JoinColumn(name = "Medico_id"), inverseJoinColumns = @JoinColumn(name = "Paciente_id")
-
-	)
+	@OneToMany(mappedBy="medicoresponsavel")
 	Set<Paciente> paciente;
 
 

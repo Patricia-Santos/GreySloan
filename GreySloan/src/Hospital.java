@@ -1,11 +1,13 @@
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class Hospital implements Identificavel {
 
 	@Id
@@ -16,7 +18,9 @@ public class Hospital implements Identificavel {
 	private long contato;
 	private String endereco;
 	
-	@OneToMany(mappedBy = "p")
+	
+	
+	@OneToMany(mappedBy = "h")
 	private Set<Paciente> paciente;
 	
 	@OneToMany(mappedBy = "m")
